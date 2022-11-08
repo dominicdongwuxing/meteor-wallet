@@ -3,15 +3,27 @@ import { Meteor } from "meteor/meteor";
 import {check} from "meteor/check";
 
 Meteor.methods({
-    'contacts.insert'({ name, email, imageUrl }) {
-        check(name,String)
-        check(email,String)
-        check(imageUrl,String)
-        if(!name) throw new Meteor.Error('Name is required.')
-        return ContactsCollection.insert({ name, email, imageUrl, createdAt: new Date() });
-    },
-    'contacts.remove'({contactId}) {
-        check(contactId, String)
-        return ContactsCollection.remove(contactId)
+  "contacts.insert"({ name, email, imageUrl, walletId }) {
+    check(name, String);
+    check(email, String);
+    check(imageUrl, String);
+    check(walletId, String);
+    if (!name) {
+      throw new Meteor.Error("Name is required.");
     }
-})
+    if (!walletId) {
+      throw new Meteor.Error("Wallet ID is required.");
+    }
+    return ContactsCollection.insert({
+      name,
+      email,
+      imageUrl,
+      walletId,
+      createdAt: new Date(),
+    });
+  },
+  "contacts.archive"({ contactId }) {
+    check(contactId, String);
+    ContactsCollection.update({ _id: contactId }, { $set: { archived: true } });
+  },
+});
