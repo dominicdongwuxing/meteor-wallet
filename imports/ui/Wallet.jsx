@@ -3,9 +3,10 @@ import React from "react";
 import { useSubscribe, useFind } from "meteor/react-meteor-data";
 import { Model } from "./components/Model";
 import { SelectContact } from "./components/SelectContact";
-import { ContactsCollection } from "../api/ContactsCollection";
-import { WalletsCollection } from "../api/WalletsCollection";
+import { ContactsCollection } from "../api/collections/ContactsCollection";
+import { WalletsCollection } from "../api/collections/WalletsCollection";
 import { Loading } from "./components/Loading";
+import '../../info/CustomError'
 
 export const Wallet = () => {
   const isLoadingContacts = useSubscribe("contacts");
@@ -34,7 +35,13 @@ export const Wallet = () => {
       },
       (errorResponse) => {
         if (errorResponse) {
-          setErrorMessage(errorResponse.error);
+          if(errorResponse.error) {
+            setErrorMessage(errorResponse.error);
+          } else {
+            errorResponse.details?.forEach((error) => {
+              setErrorMessage(error.message);
+            })
+          }
         } else {
           setOpen(false);
           setDestinationWallet({});
