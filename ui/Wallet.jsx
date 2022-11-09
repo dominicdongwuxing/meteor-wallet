@@ -6,7 +6,7 @@ import { SelectContact } from "./components/SelectContact";
 import { ContactsCollection } from "../api/collections/ContactsCollection";
 import { WalletsCollection } from "../api/collections/WalletsCollection";
 import { Loading } from "./components/Loading";
-import '../../info/CustomError'
+import '../info/CustomError'
 
 export const Wallet = () => {
   const isLoadingContacts = useSubscribe("contacts");

@@ -1,9 +1,3 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {},
-  plugins: [],
-}
+  content: ['./ui/**/*.js', './client/**/*.js', './client/**/*.html'],
+};
